@@ -1,0 +1,86 @@
+<%- include('../partials/head', { title: PageTitle }) %>
+
+  <style>
+    .modern-card {
+      background-color: #f9f9f9;
+      border: none;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      padding: 30px;
+      margin-top: 30px;
+    }
+
+    .modern-card h4 {
+      color: #333;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .form-control {
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      box-shadow: none;
+    }
+
+    .form-control:focus {
+      border-color: #6c63ff;
+      box-shadow: 0 0 0 0.2rem rgba(108, 99, 255, 0.25);
+    }
+
+    .btn-modern {
+      background-color: #1E1E2F;
+      /* Matches dark navbar */
+      color: #D1D1D1;
+      /* Light gray text for contrast */
+      border-radius: 8px;
+      border: none;
+      padding: 5px 12px;
+      font-size: 1rem;
+    }
+
+    .btn-modern:hover {
+      background-color: #2F2F44;
+      /* Slightly lighter for hover effect */
+      color: #ffffff;
+    }
+  </style>
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="modern-card">
+          <h4>Add a New Book</h4>
+          <form method="POST" action="/admin/add-book">
+            <div class="form-group">
+              <label for="title" style="color: #1E1E2F;">Book Title</label>
+              <input type="text" class="form-control" id="title" name="title" placeholder="The Silent Patient" required>
+            </div>
+            <div class="form-group">
+              <label for="author" style="color: #1E1E2F;">Author</label>
+              <input type="text" class="form-control" id="author" name="author" placeholder="Alex Michaelides" required>
+            </div>
+            <div class="form-group">
+              <label for="genre" style="color: #1E1E2F;">Genre</label>
+              <input type="text" class="form-control" id="genre" name="genre" placeholder="Thriller, Mystery..."
+                required>
+            </div>
+            <div class="form-group">
+              <label for="imageUrl" style="color: #1E1E2F;">Image URL</label>
+              <input type="url" class="form-control" id="imageUrl" name="imageUrl"
+                placeholder="https://example.com/image.jpg">
+            </div>
+            <div class="form-group">
+              <label for="description" style="color: #1E1E2F;">Description</label>
+              <textarea class="form-control" id="description" name="description" rows="3"
+                placeholder="Brief summary of the book"></textarea>
+            </div>
+            <button type="submit" class="btn btn-modern" style="display: block; margin: 0 auto;">Add Book</button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <%- include('../partials/footer') %>

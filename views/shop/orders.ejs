@@ -1,0 +1,89 @@
+<%- include('../partials/head', { title: PageTitle }) %>
+
+    <style>
+        .orders-container {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 40px;
+            background-color: #f5f6fa;
+            border-radius: 18px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.07);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .orders-container h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            font-weight: 600;
+            color: #222831;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .order {
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: white;
+            transition: transform 0.3s ease;
+        }
+
+        .order:hover {
+            transform: scale(1.02);
+        }
+
+        .order-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            color: #1E1E2F;
+        }
+
+        .order-items {
+            font-family: 'Roboto', sans-serif;
+            color: #555959;
+            margin-top: 8px;
+            margin-left: 15px;
+        }
+
+        .order-total {
+            margin-top: 12px;
+            font-weight: bold;
+            color: #1E1E2F;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+
+    <div class="orders-container">
+        <h2>Your Orders</h2>
+
+        <% orders.forEach(order=> { %>
+            <div class="order">
+                <div class="order-title">Order #<%= order.id %> — <%= order.date %>
+                </div>
+                <ul class="order-items">
+                    <% order.items.forEach(item=> { %>
+                        <li>
+                            <%= item.title %> (x<%= item.quantity %>)
+                        </li>
+                        <% }); %>
+                </ul>
+                <div class="order-total">Total: $<%= order.total %>
+                </div>
+            </div>
+            <% }); %>
+    </div>
+
+    <%- include('../partials/footer') %>
