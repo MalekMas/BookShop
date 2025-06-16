@@ -18,6 +18,12 @@
                         </div>
 
                         <div class="mb-3">
+                            <label for="price" class="form-label">Price ($)</label>
+                            <input type="number" step="0.01" min="0" class="form-control bg-light text-dark" id="price"
+                                name="price" required value="<%= book.price %>">
+                        </div>
+
+                        <div class="mb-3">
                             <label for="author" class="form-label">Author</label>
                             <input type="text" class="form-control bg-light text-dark" id="author" name="author"
                                 required value="<%= book.author %>">
@@ -27,6 +33,37 @@
                             <label for="genre" class="form-label">Genre</label>
                             <input type="text" class="form-control bg-light text-dark" id="genre" name="genre" required
                                 value="<%= book.genre %>">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="category" class="form-label">Category</label>
+                            <input type="text" class="form-control bg-light text-dark" id="category" name="category"
+                                required value="<%= book.category %>">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="rating" class="form-label">Rating (1 to 5)</label>
+                            <input type="number" step="0.1" min="1" max="5" class="form-control bg-light text-dark"
+                                id="rating" name="rating" required value="<%= book.rating %>">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="publisher" class="form-label">Publisher</label>
+                            <input type="text" class="form-control bg-light text-dark" id="publisher" name="publisher"
+                                required value="<%= book.publisher %>">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="publishedDate" class="form-label">Published Date</label>
+                            <input type="date" class="form-control bg-light text-dark" id="publishedDate"
+                                name="publishedDate" required
+                                value="<%= book.publishedDate ? book.publishedDate.toISOString().substring(0,10) : '' %>">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="isbn" class="form-label">ISBN</label>
+                            <input type="text" class="form-control bg-light text-dark" id="isbn" name="isbn" required
+                                value="<%= book.isbn %>">
                         </div>
 
                         <div class="mb-3">

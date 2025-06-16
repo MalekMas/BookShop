@@ -124,4 +124,54 @@ exports.getOrders = (req, res, next) => {
   });
 };
 
+exports.getBookDetails = async (req, res, next) => {
+  const bookId = req.params.bookId;
+  try {
+    const book = await Book.findById(bookId);
+    if (!book) {
+      return res.status(404).render("404", { PageTitle: "Book Not Found" });
+    }
+    res.render("shop/book-details", {
+      book: book,
+      PageTitle: book.title,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(404).render("404", { PageTitle: "Error" });
+  }
+};
+
+exports.getBuy = async (req, res, next) => {
+  if (!req.user) {
+    return res.redirect("/login");
+  }
+
+  const bookId = req.params.bookId;
+
+  try {
+    const book = await Book.findById(bookId);
+    if (!book) {
+      return res.status(404).send("Book not found");
+    }
+
+    const user = req.user;
+
+    const cartItemIndex = user.cart.items.findIndex(
+      (item) => item.productId.toString() === bookId
+    );
+
+    if (cartItemIndex >= 0) {
+      user.cart.items[cartItemIndex].quantity += 1;
+    } else {
+      user.cart.items.push({ productId: bookId, quantity: 1 });
+    }
+
+    await user.save();
+    res.redirect("/bookshop/cart");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error adding book to cart");
+  }
+};
+
 exports.postOrder = (req, res, next) => {};

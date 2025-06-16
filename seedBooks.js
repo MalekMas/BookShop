@@ -3,123 +3,151 @@ const Book = require('./models/book'); // adjust the path if needed
 
 const books = [
   {
+    title: "Pride and Prejudice",
+    author: "Jane Austen",
+    genre: "Classic",
+    category: "Fiction",
+    rating: 4.5,
+    publisher: "Penguin Classics",
+    publishedDate: new Date("1813-01-28"),
+    isbn: "9780141439518",
+    description: "A timeless romantic novel about manners, marriage, and society.",
+    imageUrl: "https://images-na.ssl-images-amazon.com/images/I/81OthjkJBuL.jpg"
+  },
+  {
+    title: "Project Hail Mary",
+    author: "Andy Weir",
+    genre: "Science Fiction",
+    category: "Fiction",
+    rating: 4.7,
+    publisher: "Ballantine Books",
+    publishedDate: new Date("2021-05-04"),
+    isbn: "9780593135204",
+    description: "A lone astronaut fights to save Earth in this epic sci‑fi adventure.",
+    imageUrl: "https://m.media-amazon.com/images/I/71gk0vRM8cL.jpg"
+  },
+  {
+    title: "1984",
+    author: "George Orwell",
+    genre: "Dystopian",
+    category: "Fiction",
+    rating: 4.7,
+    publisher: "Signet Classics",
+    publishedDate: new Date("1949-06-08"),
+    isbn: "9780451524935",
+    description: "A chilling tale of totalitarianism and surveillance.",
+    imageUrl: "https://images-na.ssl-images-amazon.com/images/I/71kxa1-0mfL.jpg"
+  },
+  {
     title: "The Great Gatsby",
     author: "F. Scott Fitzgerald",
     genre: "Classic",
-    imageUrl: "https://covers.openlibrary.org/b/id/7222246-L.jpg",
-    description: "A novel about the American dream and the roaring twenties.",
-  },
-  {
-    title: "Educated",
-    author: "Tara Westover",
-    genre: "Memoir",
-    imageUrl:
-      "https://images-na.ssl-images-amazon.com/images/I/81WojUxbbFL.jpg",
-    description:
-      "A woman raised in isolation breaks away from her survivalist family to pursue education.",
-  },
-  {
-    title: "To Kill a Mockingbird",
-    author: "Harper Lee",
-    genre: "Classic",
-    imageUrl: "https://covers.openlibrary.org/b/id/8228691-L.jpg",
-    description:
-      "A powerful story of racial injustice and childhood innocence in the Deep South.",
-  },
-  {
-    title: "Pride and Prejudice",
-    author: "Jane Austen",
-    genre: "Romance",
-    imageUrl: "https://covers.openlibrary.org/b/id/8091016-L.jpg",
-    description:
-      "A witty commentary on manners, marriage, and morality in 19th century England.",
+    category: "Fiction",
+    rating: 4.2,
+    publisher: "Scribner",
+    publishedDate: new Date("1925-04-10"),
+    isbn: "9780743273565",
+    description: "A portrait of the Jazz Age and the elusive American Dream.",
+    imageUrl: "https://images-na.ssl-images-amazon.com/images/I/81af+MCATTL.jpg"
   },
   {
     title: "The Hobbit",
     author: "J.R.R. Tolkien",
     genre: "Fantasy",
-    imageUrl: "https://covers.openlibrary.org/b/id/6979861-L.jpg",
-    description:
-      "Bilbo Baggins embarks on a quest filled with adventure, dragons, and treasure.",
+    category: "Fiction",
+    rating: 4.7,
+    publisher: "Mariner Books",
+    publishedDate: new Date("1937-09-21"),
+    isbn: "9780547928227",
+    description: "Bilbo’s epic journey through Middle‑Earth.",
+    imageUrl: "https://images-na.ssl-images-amazon.com/images/I/91b0C2YNSrL.jpg"
   },
   {
-    title: "Fahrenheit 451",
-    author: "Ray Bradbury",
-    genre: "Dystopian",
-    imageUrl: "https://covers.openlibrary.org/b/id/9251996-L.jpg",
-    description: "A society where books are banned and “firemen” burn them.",
+    title: "Sapiens: A Brief History of Humankind",
+    author: "Yuval Noah Harari",
+    genre: "History",
+    category: "Non-Fiction",
+    rating: 4.7,
+    publisher: "Harper",
+    publishedDate: new Date("2015-02-10"),
+    isbn: "9780062316097",
+    description: "An exploration of human history and evolution.",
+    imageUrl: "https://images-na.ssl-images-amazon.com/images/I/713jIoMO3UL.jpg"
   },
   {
-    title: "Moby-Dick",
-    author: "Herman Melville",
-    genre: "Adventure",
-    imageUrl: "https://covers.openlibrary.org/b/id/8101343-L.jpg",
-    description: "The obsessive quest of Captain Ahab to hunt the white whale.",
-  },
-  {
-    title: "Jane Eyre",
-    author: "Charlotte Brontë",
-    genre: "Gothic",
-    imageUrl: "https://covers.openlibrary.org/b/id/8231991-L.jpg",
-    description:
-      "A strong-willed orphan girl’s journey to self-respect and love.",
-  },
-  {
-    title: "The Catcher in the Rye",
-    author: "J.D. Salinger",
-    genre: "Fiction",
-    imageUrl: "https://covers.openlibrary.org/b/id/8231856-L.jpg",
-    description: "A teenager’s cynical and sensitive perspective on life.",
-  },
-  {
-    title: "Brave New World",
-    author: "Aldous Huxley",
-    genre: "Science Fiction",
-    imageUrl: "https://covers.openlibrary.org/b/id/8775043-L.jpg",
-    description:
-      "A dystopian future where society is engineered for conformity and control.",
-  },
-  {
-    title: "The Lord of the Rings",
-    author: "J.R.R. Tolkien",
-    genre: "Fantasy",
-    imageUrl: "https://covers.openlibrary.org/b/id/8231993-L.jpg",
-    description:
-      "Epic saga of the quest to destroy the One Ring and save Middle-earth.",
-  },
-  {
-    title: "Animal Farm",
-    author: "George Orwell",
-    genre: "Political Satire",
-    imageUrl: "https://covers.openlibrary.org/b/id/8228697-L.jpg",
-    description:
-      "A satirical allegory of the Russian Revolution using farm animals.",
-  },
-  {
-    title: "Wuthering Heights",
-    author: "Emily Brontë",
-    genre: "Gothic",
-    imageUrl: "https://covers.openlibrary.org/b/id/8231975-L.jpg",
-    description:
-      "A dark tale of passionate and destructive love on the Yorkshire moors.",
-  },
-  {
-    title: "The Chronicles of Narnia",
-    author: "C.S. Lewis",
-    genre: "Fantasy",
-    imageUrl: "https://covers.openlibrary.org/b/id/8232001-L.jpg",
-    description:
-      "Children discover a magical world filled with adventure and myth.",
+    title: "Educated",
+    author: "Tara Westover",
+    genre: "Memoir",
+    category: "Non-Fiction",
+    rating: 4.7,
+    publisher: "Random House",
+    publishedDate: new Date("2018-02-20"),
+    isbn: "9780399590504",
+    description: "A memoir of family and self‑discovery through education.",
+    imageUrl: "https://images-na.ssl-images-amazon.com/images/I/81WojUxbbFL.jpg"
   },
   {
     title: "The Alchemist",
     author: "Paulo Coelho",
     genre: "Adventure",
-    imageUrl: "https://covers.openlibrary.org/b/id/8373223-L.jpg",
-    description:
-      "A shepherd’s journey to discover his personal legend and true destiny.",
+    category: "Fiction",
+    rating: 4.6,
+    publisher: "HarperOne",
+    publishedDate: new Date("1993-05-01"),
+    isbn: "9780061122415",
+    description: "A shepherd’s journey to find his personal legend.",
+    imageUrl: "https://images-na.ssl-images-amazon.com/images/I/71aFt4+OTOL.jpg"
   },
+  {
+    title: "Brave New World",
+    author: "Aldous Huxley",
+    genre: "Dystopian",
+    category: "Fiction",
+    rating: 4.2,
+    publisher: "Harper Perennial",
+    publishedDate: new Date("1932-08-30"),
+    isbn: "9780060850524",
+    description: "A statistic vision of a genetically controlled future society.",
+    imageUrl: "https://images-na.ssl-images-amazon.com/images/I/81z4FcS3lPL.jpg"
+  },
+  {
+    title: "The Catcher in the Rye",
+    author: "J.D. Salinger",
+    genre: "Classic",
+    category: "Fiction",
+    rating: 4.0,
+    publisher: "Little, Brown",
+    publishedDate: new Date("1951-07-16"),
+    isbn: "9780316769488",
+    description: "Holden Caulfield’s cynical teenage adventures in NYC.",
+    imageUrl: "https://images-na.ssl-images-amazon.com/images/I/81Othjk-x7L.jpg"
+  },
+  {
+    title: "Jurassic Park",
+    author: "Michael Crichton",
+    genre: "Science Fiction",
+    category: "Fiction",
+    rating: 4.5,
+    publisher: "Ballantine Books",
+    publishedDate: new Date("1990-09-20"),
+    isbn: "9780345538987",
+    description: "Genetically resurrected dinosaurs run amok in a futuristic park.",
+    imageUrl: "https://images-na.ssl-images-amazon.com/images/I/51Fv+YC8tyL.jpg"
+  },
+  {
+    title: "Everything Is Illuminated",
+    author: "Jonathan Safran Foer",
+    genre: "Literary Fiction",
+    category: "Fiction",
+    rating: 4.1,
+    publisher: "Little, Brown",
+    publishedDate: new Date("2002-04-30"),
+    isbn: "9780316921891",
+    description: "A young man travels to Eastern Europe to uncover his family history.",
+    imageUrl: "https://images-na.ssl-images-amazon.com/images/I/71yNa6AD1CL.jpg"
+  }
 ];
+
 
 mongoose
   .connect('mongodb://localhost:27017/BookShop') // 🔁 Replace with your MongoDB URI if needed

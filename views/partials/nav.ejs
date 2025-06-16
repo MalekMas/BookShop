@@ -15,15 +15,41 @@
         <li class="nav-item px-2">
           <a class="nav-link" href="/bookshop/orders">Orders</a>
         </li>
-        <li class="nav-item dropdown px-2 position-relative">
-          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-            Admin
-          </a>
-          <div class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
-            <a class="dropdown-item" href="/admin/add-book">Add Book</a>
-            <a class="dropdown-item" href="/admin/books">Admin Books</a>
-          </div>
-        </li>
+        <% if (user && (isAuthenticated && user.name==='admin' && (user.email==='admin@gmail.com' &&
+          user.password==='123456' ))) { %>
+          <li class="nav-item dropdown px-2 position-relative">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+              Administrator
+            </a>
+            <div class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+              <a class="dropdown-item" href="/admin/add-book">Add Book</a>
+              <a class="dropdown-item" href="/admin/books">Admin Books</a>
+            </div>
+          </li>
+          <% } %>
+
+
+            <% if (user && (isAuthenticated || user.name==='admin' )) { %>
+              <li class="nav-item dropdown px-2 position-relative">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown">
+                  <%= user.name %>
+                </a>
+                <div class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="userDropdown">
+                  <a class="dropdown-item" href="/profile">Profile</a>
+                  <a class="dropdown-item" href="#" onclick="logout()">Logout</a>
+                </div>
+              </li>
+              <% } else { %>
+                <li class="nav-item px-2">
+                  <a class="nav-link" href="/login">Login</a>
+                </li>
+                <li class="nav-item px-2">
+                  <a class="nav-link" href="/signup">Sign Up</a>
+                </li>
+                <% } %>
+
+
+
       </ul>
     </div>
   </div>
@@ -48,36 +74,127 @@
     color: #F2F2F7 !important;
     font-size: 1.5rem;
     font-weight: 400;
-    /* Slightly heavier for brand */
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    border-radius: 6px;
+    padding: 0.2rem 0.4rem;
+    /* padding for smooth scale */
+    display: inline-block;
+    /* enable transform */
   }
 
+  .lighter-navbar .navbar-brand:hover {
+    background-color: #1F1F2D;
+    color: #A3B5FF !important;
+    transform: scale(1.05);
+  }
+
+  /* Animate all nav-links */
   .lighter-navbar .nav-link {
     color: #F2F2F7 !important;
     font-weight: 300;
     font-size: 1rem;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
     border-radius: 6px;
   }
 
-  .lighter-navbar .nav-link:hover,
-  .lighter-navbar .dropdown-item:hover {
+  .lighter-navbar .nav-link:hover {
     background-color: #1F1F2D;
     color: #A3B5FF !important;
+    transform: scale(1.05);
   }
 
+  /* Ensure dropdown container is relative */
+  .dropdown {
+    position: relative;
+  }
+
+  /* Position dropdown menu absolutely below toggle */
   .dropdown-menu-dark {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 150px;
+    z-index: 1000;
+
     background-color: #1A1A27;
     border: none;
     border-radius: 10px;
+
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    pointer-events: none;
+    display: block;
   }
 
+  /* Show dropdown with fade & slide on hover */
+  .dropdown:hover>.dropdown-menu-dark {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    /* enable clicks */
+  }
+
+  /* Dropdown items initial style */
   .dropdown-menu-dark .dropdown-item {
     color: #E1E1EF;
     font-weight: 300;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
   }
 
+  /* Animate dropdown items individually on hover */
+  .dropdown:hover>.dropdown-menu-dark .dropdown-item {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Stagger animation delay for dropdown items */
+  .dropdown:hover>.dropdown-menu-dark .dropdown-item:nth-child(1) {
+    transition-delay: 0.05s;
+  }
+
+  .dropdown:hover>.dropdown-menu-dark .dropdown-item:nth-child(2) {
+    transition-delay: 0.1s;
+  }
+
+  .dropdown:hover>.dropdown-menu-dark .dropdown-item:nth-child(3) {
+    transition-delay: 0.15s;
+  }
+
+  /* Hover effect for dropdown items */
   .dropdown-menu-dark .dropdown-item:hover {
     background-color: #2A2A3F;
     color: #B8C5FF;
+    transform: translateX(5px);
+  }
+
+  @media (max-width: 768px) {
+    .dropdown-menu-dark {
+      left: 0 !important;
+      right: 0 !important;
+      width: 100vw;
+      /* full viewport width */
+      border-radius: 0;
+      /* optional, cleaner edges */
+    }
   }
 </style>
+
+<script>
+  function logout() {
+    fetch('/logout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(() => {
+        location.reload(); // reloads current page as a guest
+      })
+      .catch(err => {
+        console.error('Logout failed:', err);
+      });
+  }
+</script>

@@ -34,6 +34,7 @@ app.use(
 // Make session info available in views
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.session.isAuthenticated || false;
+  res.locals.user = req.session.user || null;
   next();
 });
 

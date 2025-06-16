@@ -1,0 +1,171 @@
+<%- include('../partials/head', { title: book.title + ' - Book Details' }) %>
+
+    <style>
+        body {
+            color: #222831;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 300;
+            background-color: #f2f3f7;
+        }
+
+        .book-details-card {
+            background-color: #f2f3f7;
+            border-radius: 18px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.07);
+            padding: 50px 40px;
+            margin: 60px auto;
+            max-width: 900px;
+            animation: fadeInUp 0.8s ease forwards;
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .book-image {
+            max-width: 300px;
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(30, 30, 47, 0.2);
+            flex-shrink: 0;
+        }
+
+        .book-info-container {
+            flex: 1;
+        }
+
+        .book-title {
+            font-weight: 700;
+            color: #222831;
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.6rem;
+            margin-bottom: 12px;
+        }
+
+        .book-author {
+            font-weight: 500;
+            color: #555959;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .book-info {
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+            color: #333;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #1E1E2F;
+            margin-right: 6px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            background-color: #1E1E2F;
+            color: #dfdddd;
+            border-radius: 12px;
+            padding: 12px 30px;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(30, 30, 47, 0.5);
+            transition: background-color 0.35s ease, color 0.35s ease, transform 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: #2c2c3e;
+            color: #e0e0e0;
+            box-shadow: 0 6px 15px rgba(44, 44, 62, 0.7);
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            .book-details-card {
+                flex-direction: column;
+                padding: 40px 20px;
+                max-width: 90%;
+            }
+
+            .book-image {
+                max-width: 100%;
+                margin-bottom: 30px;
+            }
+
+            .back-btn {
+                margin-top: 20px;
+            }
+        }
+    </style>
+
+    <div class="book-details-card">
+        <% if (book.imageUrl) { %>
+            <img src="<%= book.imageUrl %>" alt="<%= book.title %> cover" class="book-image" />
+            <% } %>
+
+                <div class="book-info-container">
+                    <h1 class="book-title">
+                        <%= book.title %>
+                    </h1>
+                    <p class="book-author">by <%= book.author %>
+                    </p>
+
+                    <p class="book-info">
+                        <span class="info-label">Category:</span>
+                        <%= book.category %>
+                    </p>
+
+                    <p class="book-info">
+                        <span class="info-label">Rating:</span>
+                        <%= book.rating %> / 5
+                    </p>
+
+                    <p class="book-info">
+                        <span class="info-label">Description:</span><br />
+                        <%= book.description %>
+                    </p>
+
+                    <p class="book-info">
+                        <span class="info-label">Publisher:</span>
+                        <%= book.publisher %>
+                    </p>
+
+                    <p class="book-info">
+                        <span class="info-label">Published Date:</span>
+                        <%= book.publishedDate %>
+                    </p>
+
+                    <p class="book-info">
+                        <span class="info-label">ISBN:</span>
+                        <%= book.isbn %>
+                    </p>
+
+                    <a href="/bookshop/buy/<%= book._id %>" class="back-btn"
+                        style="background-color: #4CAF50; margin-right: 10px;">
+                        Buy Now
+                    </a>
+
+
+                    <a href="/bookshop/books" class="back-btn">Back to Books</a>
+                </div>
+    </div>
+
+    <%- include('../partials/footer') %>

@@ -1,4 +1,4 @@
-const Book = require('../models/book');
+const Book = require("../models/book");
 
 exports.getAddBook = (req, res, next) => {
   res.render("admin/add-book", { PageTitle: "Add Book Page" });
@@ -8,9 +8,8 @@ exports.postAddBook = async (req, res) => {
   const { title, author, genre, imageUrl, description } = req.body;
   const book = new Book({ title, author, genre, imageUrl, description });
   await book.save();
-  res.redirect('/admin/books');
+  res.redirect("/admin/books");
 };
-
 
 exports.getEditBook = async (req, res) => {
   const bookId = req.params.bookId;
@@ -28,7 +27,6 @@ exports.getEditBook = async (req, res) => {
     res.redirect("/");
   }
 };
-
 
 exports.postEditBook = async (req, res) => {
   const { bookId, title, author, genre, imageUrl, description } = req.body;
@@ -63,7 +61,6 @@ exports.postDeleteBook = async (req, res) => {
     res.status(500).send("Failed to delete book.");
   }
 };
-
 
 exports.getBooks = async (req, res) => {
   try {

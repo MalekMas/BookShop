@@ -29,9 +29,7 @@
 
     .btn-modern {
       background-color: #1E1E2F;
-      /* Matches dark navbar */
       color: #D1D1D1;
-      /* Light gray text for contrast */
       border-radius: 8px;
       border: none;
       padding: 5px 12px;
@@ -40,7 +38,6 @@
 
     .btn-modern:hover {
       background-color: #2F2F44;
-      /* Slightly lighter for hover effect */
       color: #ffffff;
     }
   </style>
@@ -55,32 +52,71 @@
               <label for="title" style="color: #1E1E2F;">Book Title</label>
               <input type="text" class="form-control" id="title" name="title" placeholder="The Silent Patient" required>
             </div>
+
+            <div class="form-group">
+              <label for="price" style="color: #1E1E2F;">Price</label>
+              <input type="number" step="0.01" min="0" class="form-control" id="price" name="price" placeholder="19.99"
+                required>
+            </div>
+
             <div class="form-group">
               <label for="author" style="color: #1E1E2F;">Author</label>
               <input type="text" class="form-control" id="author" name="author" placeholder="Alex Michaelides" required>
             </div>
+
             <div class="form-group">
               <label for="genre" style="color: #1E1E2F;">Genre</label>
               <input type="text" class="form-control" id="genre" name="genre" placeholder="Thriller, Mystery..."
                 required>
             </div>
+
             <div class="form-group">
-              <label for="imageUrl" style="color: #1E1E2F;">Image URL</label>
-              <input type="url" class="form-control" id="imageUrl" name="imageUrl"
-                placeholder="https://example.com/image.jpg">
+              <label for="category" style="color: #1E1E2F;">Category</label>
+              <input type="text" class="form-control" id="category" name="category"
+                placeholder="Fiction, Non-Fiction..." required>
             </div>
+
+            <div class="form-group">
+              <label for="rating" style="color: #1E1E2F;">Rating (0 to 5)</label>
+              <input type="number" step="0.1" min="0" max="5" class="form-control" id="rating" name="rating"
+                placeholder="4.5" required>
+            </div>
+
+            <div class="form-group">
+              <label for="publisher" style="color: #1E1E2F;">Publisher</label>
+              <input type="text" class="form-control" id="publisher" name="publisher" placeholder="Moonlight Press"
+                required>
+            </div>
+
+            <div class="form-group">
+              <label for="publishedDate" style="color: #1E1E2F;">Published Date</label>
+              <input type="date" class="form-control" id="publishedDate" name="publishedDate" required>
+            </div>
+
+            <div class="form-group">
+              <label for="isbn" style="color: #1E1E2F;">ISBN</label>
+              <input type="text" class="form-control" id="isbn" name="isbn" placeholder="978-1-23456-789-0" required>
+            </div>
+
             <div class="form-group">
               <label for="description" style="color: #1E1E2F;">Description</label>
               <textarea class="form-control" id="description" name="description" rows="3"
-                placeholder="Brief summary of the book"></textarea>
+                placeholder="Brief summary of the book" required></textarea>
             </div>
+
+            <div class="form-group">
+              <label for="imageUrl" style="color: #1E1E2F;">Image URL</label>
+              <input type="url" class="form-control" id="imageUrl" name="imageUrl"
+                placeholder="https://example.com/image.jpg" required>
+            </div>
+
             <button type="submit" class="btn btn-modern" style="display: block; margin: 0 auto;">Add Book</button>
           </form>
-
         </div>
       </div>
     </div>
   </div>
-  <br>
-  <br>
+
+  <br><br>
+
   <%- include('../partials/footer') %>

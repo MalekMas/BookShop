@@ -12,7 +12,6 @@
 
     .table thead th {
       background-color: #1E1E2F;
-      /* Matches dark navbar */
       color: white;
       border: none;
     }
@@ -24,9 +23,7 @@
 
     .btn-modern {
       background-color: #1E1E2F;
-      /* Matches dark navbar */
       color: #D1D1D1;
-      /* Light gray text for contrast */
       border-radius: 10px;
       border: none;
       padding: 5px 12px;
@@ -35,13 +32,11 @@
 
     .btn-modern:hover {
       background-color: #2F2F44;
-      /* Slightly lighter for hover effect */
       color: #ffffff;
     }
 
     .btn-danger {
       color: #D1D1D1;
-      /* Light gray text for contrast */
       border-radius: 10px;
       border: none;
       padding: 5px 12px;
@@ -61,11 +56,12 @@
         <thead>
           <tr>
             <th>Title</th>
+            <th>Price</th>
             <th>Author</th>
             <th>Genre</th>
+            <th>Rating</th>
             <th>Picture</th>
-            <th>Description</th>
-            <th>Actions</th> <!-- Added header for buttons -->
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -74,25 +70,28 @@
               <td>
                 <%= book.title %>
               </td>
+              <td>$<%= book.price.toFixed(2) %>
+              </td>
               <td>
                 <%= book.author %>
               </td>
               <td>
                 <%= book.genre %>
               </td>
-              <td><img src="<%= book.imageUrl %>" alt="<%= book.title %>" style="width:50px;"></td>
               <td>
-                <%= book.description %>
+                <%= book.rating.toFixed(1) %>/5
               </td>
+              <td><img src="<%= book.imageUrl %>" alt="<%= book.title %>" style="width:50px;"></td>
+
               <td class="d-flex gap-2">
                 <a href="/admin/edit-book/<%= book._id %>" class="btn btn-modern">Edit</a>
-                <form method="POST" action="/admin/delete-book">
+                <form method="POST" action="/admin/delete-book" style="margin: 0;">
                   <input type="hidden" name="bookId" value="<%= book._id %>">
                   <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
               </td>
             </tr>
-            <% }); %>
+            <% }) %>
         </tbody>
       </table>
     </div>
