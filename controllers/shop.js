@@ -4,18 +4,40 @@ exports.getIndex = (req, res, next) => {
   res.render("shop/index", { PageTitle: "Shop Home" });
 };
 
-exports.getBooks = async (req, res, next) => {
-  try {
-    const books = await Book.find();
-    res.render("shop/displayuser", {
-      PageTitle: "All Books",
-      books: books,
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(404).send("Error loading books");
+app.get('/bookshop/books', async (req, res) => {
+  const { search, category } = req.query;
+
+  // Build filter object
+  let filter = {};
+
+  if (search) {
+    // Search by title or author (case-insensitive partial match)
+    filter.$or = [
+      { title: { $regex: search, $options: 'i' } },
+      { author: { $regex: search, $options: 'i' } }
+    ];
   }
-};
+
+  if (category && category.trim() !== '') {
+    filter.genre = category;
+  }
+
+  try {
+    const books = await Book.find(filter).exec();
+
+    res.render('bookshop/books', {
+      PageTitle: 'Books',
+      books,
+      search,
+      category
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error');
+  }
+});
+
+
 
 exports.getBook = (req, res, next) => {};
 
@@ -82,12 +104,9 @@ exports.postCartDeleteItem = async (req, res, next) => {
   if (!req.user) {
     return res.redirect("/login");
   }
-
   const bookId = req.body.bookId;
-
   try {
     const user = req.user;
-    // Filter by productId (not bookId)
     user.cart.items = user.cart.items.filter(
       (item) => item.productId.toString() !== bookId
     );

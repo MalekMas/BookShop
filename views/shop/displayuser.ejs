@@ -1,3 +1,4 @@
+gimme suggestion to do for the books page:
 <%- include('../partials/head', { title: PageTitle }) %>
 
   <style>
@@ -38,6 +39,8 @@
                 </p>
                 <p class="small text-muted mb-3" style="min-height: 60px;">
                   <%= book.description %>
+                </p>
+                <p class="mb-1 text-light-emphasis fst-italic">Price: $<%= book.price %>
                 </p>
                 <a href="/bookshop/book-details/<%= book._id %>" class="btn btn-outline-light mt-auto rounded-pill">View
                   Details</a>
