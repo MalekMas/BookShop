@@ -39,7 +39,6 @@ app.use((req, res, next) => {
 });
 
 app.use(async (req, res, next) => {
-  console.log("Session user:", req.session.user); // Debug log
   if (!req.session.user || !req.session.user._id) {
     return next();
   }
@@ -48,7 +47,6 @@ app.use(async (req, res, next) => {
     const user = await User.findById(req.session.user._id);
     if (user) {
       req.user = user;
-      console.log("User loaded:", user.email); // Debug log
     }
     next();
   } catch (err) {

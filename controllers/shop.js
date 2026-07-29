@@ -1,31 +1,34 @@
 const Book = require("../models/book");
+const Order = require("../models/order");
 
 exports.getIndex = (req, res, next) => {
   res.render("shop/index", { PageTitle: "Shop Home" });
 };
 
-app.get('/bookshop/books', async (req, res) => {
+exports.getBooks = async (req, res) => {
   const { search, category } = req.query;
 
   // Build filter object
   let filter = {};
 
+  const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
   if (search) {
     // Search by title or author (case-insensitive partial match)
     filter.$or = [
-      { title: { $regex: search, $options: 'i' } },
-      { author: { $regex: search, $options: 'i' } }
+      { title: { $regex: escapeRegex(search), $options: "i" } },
+      { author: { $regex: escapeRegex(search), $options: "i" } },
     ];
   }
 
   if (category && category.trim() !== '') {
-    filter.genre = category;
+    filter.genre = { $regex: `^${escapeRegex(category.trim())}$`, $options: "i" };
   }
 
   try {
     const books = await Book.find(filter).exec();
 
-    res.render('bookshop/books', {
+    res.render("shop/displayuser", {
       PageTitle: 'Books',
       books,
       search,
@@ -35,11 +38,7 @@ app.get('/bookshop/books', async (req, res) => {
     console.error(error);
     res.status(500).send('Server error');
   }
-});
-
-
-
-exports.getBook = (req, res, next) => {};
+};
 
 exports.getCart = async (req, res, next) => {
   if (!req.user) {
@@ -50,13 +49,15 @@ exports.getCart = async (req, res, next) => {
     await req.user.populate("cart.items.productId");
     const user = req.user;
 
-    const cartItems = user.cart.items.map((item) => ({
-      _id: item.productId._id,
-      title: item.productId.title,
-      price: item.productId.price || 10,
-      imageUrl: item.productId.imageUrl,
-      quantity: item.quantity,
-    }));
+    const cartItems = user.cart.items
+      .filter((item) => item.productId)
+      .map((item) => ({
+        _id: item.productId._id,
+        title: item.productId.title,
+        price: item.productId.price,
+        imageUrl: item.productId.imageUrl,
+        quantity: item.quantity,
+      }));
 
     const totalPrice = cartItems.reduce(
       (total, item) => total + item.price * item.quantity,
@@ -118,29 +119,51 @@ exports.postCartDeleteItem = async (req, res, next) => {
   }
 };
 
-exports.getOrders = (req, res, next) => {
-  const orders = [
-    {
-      id: "001",
-      date: "2025-06-10",
-      items: [
-        { title: "The Great Gatsby", quantity: 1 },
-        { title: "Pride and Prejudice", quantity: 2 },
-      ],
-      total: 45,
-    },
-    {
-      id: "002",
-      date: "2025-06-05",
-      items: [{ title: "To Kill a Mockingbird", quantity: 1 }],
-      total: 15,
-    },
-  ];
+exports.postOrder = async (req, res, next) => {
+  if (!req.user) {
+    return res.redirect("/login");
+  }
 
-  res.render("shop/orders", {
-    PageTitle: "Your Orders",
-    orders: orders,
-  });
+  try {
+    await req.user.populate("cart.items.productId");
+    const items = req.user.cart.items
+      .filter((item) => item.productId)
+      .map((item) => ({
+        product: item.productId._id,
+        title: item.productId.title,
+        price: item.productId.price,
+        quantity: item.quantity,
+      }));
+
+    if (items.length === 0) {
+      return res.redirect("/bookshop/cart");
+    }
+
+    const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    await Order.create({ user: req.user._id, items, total });
+    req.user.cart.items = [];
+    await req.user.save();
+
+    return res.redirect("/bookshop/orders");
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getOrders = async (req, res, next) => {
+  if (!req.user) {
+    return res.redirect("/login");
+  }
+
+  try {
+    const orders = await Order.find({ user: req.user._id }).sort({ createdAt: -1 });
+    res.render("shop/orders", {
+      PageTitle: "Your Orders",
+      orders,
+    });
+  } catch (err) {
+    next(err);
+  }
 };
 
 exports.getBookDetails = async (req, res, next) => {
@@ -192,5 +215,3 @@ exports.getBuy = async (req, res, next) => {
     res.status(500).send("Error adding book to cart");
   }
 };
-
-exports.postOrder = (req, res, next) => {};

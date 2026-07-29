@@ -15,21 +15,20 @@
         <li class="nav-item px-2">
           <a class="nav-link" href="/bookshop/orders">Orders</a>
         </li>
-        <% if (user && (isAuthenticated && user.name==='admin' && (user.email==='admin@gmail.com' &&
-          user.password==='123456' ))) { %>
+        <% if (user && isAuthenticated && user.role === 'admin') { %>
           <li class="nav-item dropdown px-2 position-relative">
             <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
               Administrator
             </a>
             <div class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+              <a class="dropdown-item" href="/admin">Dashboard</a>
               <a class="dropdown-item" href="/admin/add-book">Add Book</a>
-              <a class="dropdown-item" href="/admin/books">Admin Books</a>
             </div>
           </li>
           <% } %>
 
 
-            <% if (user && (isAuthenticated || user.name==='admin' )) { %>
+            <% if (user && isAuthenticated) { %>
               <li class="nav-item dropdown px-2 position-relative">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown">
                   <%= user.name %>

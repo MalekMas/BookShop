@@ -1,108 +1,44 @@
 <%- include('../partials/head', { title: PageTitle }) %>
 
-  <style>
-    body {
-      color: #222831;
-      font-weight: 300;
-      background-color: #f2f3f7;
-    }
+<style>
+  .orders-container {
+    max-width: 760px;
+    margin: 60px auto;
+    padding: 40px;
+    border-radius: 18px;
+    background: #f2f3f7;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.07);
+    color: #222831;
+  }
+  .order {
+    margin-bottom: 20px;
+    padding: 20px 25px;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+  }
+  .order-title, .order-total { font-weight: 700; }
+  .order-items { margin: 12px 0; }
+</style>
 
-    .orders-container {
-      background-color: #f2f3f7;
-      border-radius: 18px;
-      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.07);
-      padding: 50px 40px;
-      margin-top: 60px;
-      max-width: 640px;
-      /* Increased width */
-      width: 100%;
-      margin-left: auto;
-      margin-right: auto;
-      animation: fadeInUp 0.8s ease forwards;
-    }
+<div class="orders-container">
+  <h2>Your Orders</h2>
 
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(15px);
-      }
+  <% if (orders.length === 0) { %>
+    <p>You have not placed any orders yet.</p>
+  <% } %>
 
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+  <% orders.forEach((order) => { %>
+    <div class="order">
+      <div class="order-title">Order #<%= order._id %> - <%= order.createdAt.toLocaleDateString() %></div>
+      <ul class="order-items">
+        <% order.items.forEach((item) => { %>
+          <li><%= item.title %> (x<%= item.quantity %>)</li>
+        <% }) %>
+      </ul>
+      <div class="order-total">Total: $<%= order.total.toFixed(2) %></div>
+    </div>
+  <% }) %>
+</div>
 
-    .orders-container h2 {
-      margin-bottom: 40px;
-      letter-spacing: 1px;
-    }
-
-    .order {
-      background-color: #ffffff;
-      border-radius: 12px;
-      padding: 20px 25px;
-      margin-bottom: 20px;
-      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
-    }
-
-    .order-title {
-      font-weight: 600;
-      font-family: 'Poppins', sans-serif;
-      font-size: 1.2rem;
-      color: #1E1E2F;
-      margin-bottom: 12px;
-    }
-
-    .order-items {
-      font-family: 'Roboto', sans-serif;
-      font-size: 1rem;
-      color: #555959;
-      margin-left: 20px;
-      margin-bottom: 10px;
-    }
-
-    .order-items li {
-      margin-bottom: 6px;
-    }
-
-    .order-total {
-      font-weight: 700;
-      font-family: 'Roboto', sans-serif;
-      margin-top: 10px;
-    }
-
-    @media (max-width: 640px) {
-      .orders-container {
-        padding: 40px 20px;
-        margin-top: 40px;
-        max-width: 90%;
-      }
-
-      .order {
-        padding: 15px 20px;
-      }
-    }
-  </style>
-
-  <div class="orders-container">
-    <h2>Your Orders</h2>
-
-    <% orders.forEach(order=> { %>
-      <div class="order">
-        <div class="order-title">Order #<%= order.id %> — <%= order.date %>
-        </div>
-        <ul class="order-items">
-          <% order.items.forEach(item=> { %>
-            <li>
-              <%= item.title %> (x<%= item.quantity %>)
-            </li>
-            <% }) %>
-        </ul>
-        <div class="order-total">Total: $<%= order.total %>
-        </div>
-      </div>
-      <% }) %>
-  </div>
-
-  <%- include('../partials/footer') %>
+<%- include('../partials/footer') %>

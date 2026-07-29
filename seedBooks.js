@@ -4,6 +4,7 @@ const Book = require('./models/book'); // adjust the path if needed
 const books = [
   {
     title: "Pride and Prejudice",
+    price: 12.99,
     author: "Jane Austen",
     genre: "Classic",
     category: "Fiction",
@@ -16,6 +17,7 @@ const books = [
   },
   {
     title: "Project Hail Mary",
+    price: 18.99,
     author: "Andy Weir",
     genre: "Science Fiction",
     category: "Fiction",
@@ -28,6 +30,7 @@ const books = [
   },
   {
     title: "1984",
+    price: 11.99,
     author: "George Orwell",
     genre: "Dystopian",
     category: "Fiction",
@@ -40,6 +43,7 @@ const books = [
   },
   {
     title: "The Great Gatsby",
+    price: 10.99,
     author: "F. Scott Fitzgerald",
     genre: "Classic",
     category: "Fiction",
@@ -52,6 +56,7 @@ const books = [
   },
   {
     title: "The Hobbit",
+    price: 14.99,
     author: "J.R.R. Tolkien",
     genre: "Fantasy",
     category: "Fiction",
@@ -64,6 +69,7 @@ const books = [
   },
   {
     title: "Sapiens: A Brief History of Humankind",
+    price: 16.99,
     author: "Yuval Noah Harari",
     genre: "History",
     category: "Non-Fiction",
@@ -76,6 +82,7 @@ const books = [
   },
   {
     title: "Educated",
+    price: 15.99,
     author: "Tara Westover",
     genre: "Memoir",
     category: "Non-Fiction",
@@ -88,6 +95,7 @@ const books = [
   },
   {
     title: "The Alchemist",
+    price: 13.99,
     author: "Paulo Coelho",
     genre: "Adventure",
     category: "Fiction",
@@ -100,6 +108,7 @@ const books = [
   },
   {
     title: "Brave New World",
+    price: 11.49,
     author: "Aldous Huxley",
     genre: "Dystopian",
     category: "Fiction",
@@ -112,6 +121,7 @@ const books = [
   },
   {
     title: "The Catcher in the Rye",
+    price: 10.49,
     author: "J.D. Salinger",
     genre: "Classic",
     category: "Fiction",
@@ -124,6 +134,7 @@ const books = [
   },
   {
     title: "Jurassic Park",
+    price: 12.49,
     author: "Michael Crichton",
     genre: "Science Fiction",
     category: "Fiction",
@@ -136,6 +147,7 @@ const books = [
   },
   {
     title: "Everything Is Illuminated",
+    price: 14.49,
     author: "Jonathan Safran Foer",
     genre: "Literary Fiction",
     category: "Fiction",

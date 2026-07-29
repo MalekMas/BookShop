@@ -1,14 +1,47 @@
 const Book = require("../models/book");
 
+exports.getDashboard = (req, res) => {
+  res.redirect("/admin/books");
+};
+
 exports.getAddBook = (req, res, next) => {
   res.render("admin/add-book", { PageTitle: "Add Book Page" });
 };
 
-exports.postAddBook = async (req, res) => {
-  const { title, author, genre, imageUrl, description } = req.body;
-  const book = new Book({ title, author, genre, imageUrl, description });
-  await book.save();
-  res.redirect("/admin/books");
+exports.postAddBook = async (req, res, next) => {
+  const {
+    title,
+    price,
+    author,
+    genre,
+    category,
+    rating,
+    publisher,
+    publishedDate,
+    isbn,
+    imageUrl,
+    description,
+  } = req.body;
+
+  try {
+    const book = new Book({
+      title,
+      price,
+      author,
+      genre,
+      category,
+      rating,
+      publisher,
+      publishedDate,
+      isbn,
+      imageUrl,
+      description,
+    });
+    await book.save();
+    res.redirect("/admin/books");
+  } catch (err) {
+    next(err);
+  }
 };
 
 exports.getEditBook = async (req, res) => {
@@ -29,15 +62,34 @@ exports.getEditBook = async (req, res) => {
 };
 
 exports.postEditBook = async (req, res) => {
-  const { bookId, title, author, genre, imageUrl, description } = req.body;
+  const {
+    bookId,
+    title,
+    price,
+    author,
+    genre,
+    category,
+    rating,
+    publisher,
+    publishedDate,
+    isbn,
+    imageUrl,
+    description,
+  } = req.body;
 
   try {
     const book = await Book.findById(bookId);
     if (!book) return res.status(404).send("Book not found.");
 
     book.title = title;
+    book.price = price;
     book.author = author;
     book.genre = genre;
+    book.category = category;
+    book.rating = rating;
+    book.publisher = publisher;
+    book.publishedDate = publishedDate;
+    book.isbn = isbn;
     book.imageUrl = imageUrl;
     book.description = description;
 

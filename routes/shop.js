@@ -8,6 +8,7 @@ router.get("/books", shopController.getBooks);
 router.get("/book-details/:bookId", shopController.getBookDetails);
 router.get("/buy/:bookId", shopController.getBuy);
 router.get("/cart", shopController.getCart);
+
 router.post("/cart", shopController.postCart);
 router.post("/cart-delete-item", shopController.postCartDeleteItem);
 router.post("/create-order", shopController.postOrder);

@@ -1,4 +1,5 @@
 const User = require("../models/users");
+const bcrypt = require("bcryptjs");
 
 exports.getLogin = (req, res, next) => {
   if (req.session.isAuthenticated) {
@@ -15,15 +16,26 @@ exports.getLogin = (req, res, next) => {
 exports.postLogin = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email, password });
+    const user = await User.findOne({ email });
 
+    let passwordMatches = false;
     if (user) {
+      passwordMatches = await bcrypt.compare(password, user.password);
+
+      if (!passwordMatches && user.password === password) {
+        user.password = await bcrypt.hash(password, 12);
+        await user.save();
+        passwordMatches = true;
+      }
+    }
+
+    if (user && passwordMatches) {
       req.session.isAuthenticated = true;
       req.session.user = {
         _id: user._id.toString(),
         name: user.name,
         email: user.email,
-        password: user.password,
+        role: user.role,
       };
       return req.session.save((err) => {
         if (err) console.error(err);
@@ -76,10 +88,11 @@ exports.postSignUp = async (req, res, next) => {
       });
     }
 
+    const hashedPassword = await bcrypt.hash(password, 12);
     const user = new User({
       name: name,
       email: email,
-      password: password, // storing raw password (NOT secure)
+      password: hashedPassword,
       cart: { items: [] },
     });
 
@@ -98,7 +111,7 @@ exports.getProfile = (req, res, next) => {
   res.render("auth/profile", {
     pageTitle: "Your Profile",
     user: req.session.user,
-    isAuthenticated: req.session.isLoggedIn,
+    isAuthenticated: req.session.isAuthenticated,
   });
 };
 
@@ -119,6 +132,13 @@ exports.postEditProfile = async (req, res) => {
     user.email = email;
 
     await user.save();
+
+    req.session.user = {
+      _id: user._id.toString(),
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    };
 
     res.redirect("/profile");
   } catch (error) {
